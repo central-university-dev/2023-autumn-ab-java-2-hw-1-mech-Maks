@@ -1,8 +1,16 @@
 package edu.example;
 
-public class Person {
-    private String name;
+import lombok.Data;
+import org.jetbrains.annotations.Nullable;
+
+@Data
+class Person {
+    private final String name;
+
+    @Nullable
     private Person mother;
+    @Nullable
     private Person father;
+    @Nullable
     private Person friend;
 }
