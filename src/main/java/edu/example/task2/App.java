@@ -33,7 +33,7 @@ public class App {
         person1.setFather(father1);
         person2.setMother(mother2);
         person2.setFather(father2);
-        var listPerson = List.of(person1,person2);
+        List<Person> listPerson = List.of(person1,person2);
         listPerson.forEach(person3 -> personProcessors.forEach(personProcessor -> personProcessor
                 .process(person3)));
     }
