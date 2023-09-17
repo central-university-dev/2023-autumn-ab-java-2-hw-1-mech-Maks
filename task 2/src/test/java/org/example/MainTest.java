@@ -1,6 +1,9 @@
 package org.example;
 
 
+import org.example.processors.LogProcessor;
+import org.example.processors.RemoveFriendProcessor;
+import org.example.processors.SwapParentsProcessor;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -15,15 +18,18 @@ public class MainTest {
     @Test
     public void processTest() {
         List<Function<Person, Person>> functions = new ArrayList<>();
-        functions.add(Person::swapParents);
-        functions.add(Logger::log);
+        functions.add(new LogProcessor());
+        functions.add(new SwapParentsProcessor());
+        functions.add(new RemoveFriendProcessor());
 
         Person mother = new Person();
         Person father = new Person();
+        Person friend = new Person();
 
         Person child = new Person();
         child.setMother(mother);
         child.setFather(father);
+        child.setFriend(friend);
 
         List<Person> inputList = List.of(child);
 
@@ -33,6 +39,7 @@ public class MainTest {
         Person people = result.get(0);
         assert(people != null);
         assert(people.getFather() == mother && people.getMother() == father);
+        assert (people.getFriend() == null);
 
 
     }

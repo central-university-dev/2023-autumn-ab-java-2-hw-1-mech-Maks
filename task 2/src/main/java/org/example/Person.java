@@ -11,10 +11,4 @@ public class Person {
     private Person mother;
     private Person father;
     private Person friend;
-    public static Person swapParents(Person person) {
-        Person mother = person.mother;
-        person.mother = person.father;
-        person.father = mother;
-        return person;
-    }
 }
