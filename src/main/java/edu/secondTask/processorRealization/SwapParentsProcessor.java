@@ -1,6 +1,6 @@
-package edu.SecondTask.FirstVersion;
+package edu.secondTask.processorRealization;
 
-import edu.SecondTask.Person;
+import edu.secondTask.Person;
 
 public class SwapParentsProcessor implements PersonProcessor {
     @Override

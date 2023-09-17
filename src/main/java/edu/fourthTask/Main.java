@@ -1,16 +1,17 @@
-package edu.FourthTask;
+package edu.fourthTask;
 
-import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
         try {
             firstExample();
         } catch (ConcurrentModificationException e) {
-            // ignored
+            System.out.println("Error!");
         }
 
         secondExample();
@@ -29,7 +30,7 @@ public class Main {
      */
 
     public static void firstExample() {
-        List<Integer> exampleCollection = createList(4);
+        List<Integer> exampleCollection = IntStream.range(0, 4).boxed().collect(Collectors.toList());
 
         // Этот метод упадёт с ConcurrentModificationException.
 
@@ -37,7 +38,7 @@ public class Main {
     }
 
     public static void secondExample() {
-        List<Integer> exampleCollection = createList(4);
+        List<Integer> exampleCollection = IntStream.range(0, 4).boxed().collect(Collectors.toList());
 
         // Этот метод выполнится нормально.
 
@@ -56,7 +57,7 @@ public class Main {
      */
 
     public static void thirdExample() {
-        List<Integer> exampleCollection = createList(4);
+        List<Integer> exampleCollection = IntStream.range(0, 4).boxed().collect(Collectors.toList());
 
         Iterator<Integer> iterator = exampleCollection.iterator();
         while (iterator.hasNext()) {
@@ -76,24 +77,17 @@ public class Main {
      */
 
     public static void fourthExample() {
-        List<Integer> exampleCollection = createList(4);
+        List<Integer> exampleCollection = IntStream.range(0, 4).boxed().collect(Collectors.toList());
 
         exampleCollection.forEach(System.out::print);
     }
 
     public static void fifthExample() {
-        List<Integer> exampleCollection = createList(4);
+        List<Integer> exampleCollection = IntStream.range(0, 4).boxed().collect(Collectors.toList());
 
         Iterator<Integer> iterator = exampleCollection.iterator();
-        while (iterator.hasNext())
+        while (iterator.hasNext()) {
             System.out.print(iterator.next());
-    }
-
-    private static List<Integer> createList(int number) {
-        List<Integer> exampleCollection = new ArrayList<>();
-        for (int i = 0; i < number; i++)
-            exampleCollection.add(i);
-
-        return exampleCollection;
+        }
     }
 }

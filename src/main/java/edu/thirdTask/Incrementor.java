@@ -1,4 +1,4 @@
-package edu.ThirdTask;
+package edu.thirdTask;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -11,7 +11,8 @@ public class Incrementor implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 0; i < 10000; i++)
+        for (int i = 0; i < 10000; i++) {
             integer.incrementAndGet();
+        }
     }
 }

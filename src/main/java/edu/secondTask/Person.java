@@ -1,4 +1,4 @@
-package edu.SecondTask;
+package edu.secondTask;
 
 public class Person {
     private Person mother;
@@ -9,6 +9,10 @@ public class Person {
         this.mother = mother;
         this.father = father;
         this.friend = friend;
+    }
+
+    public Person() {
+
     }
 
     public Person getMother() {
@@ -25,10 +29,6 @@ public class Person {
 
     public void setFather(Person father) {
         this.father = father;
-    }
-
-    public Person getFriend() {
-        return friend;
     }
 
     public void setFriend(Person friend) {

@@ -1,4 +1,4 @@
-package edu.ThirdTask;
+package edu.thirdTask;
 
 import java.util.List;
 import java.util.concurrent.Callable;

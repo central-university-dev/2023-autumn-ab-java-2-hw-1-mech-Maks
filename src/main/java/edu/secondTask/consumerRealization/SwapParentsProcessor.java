@@ -1,6 +1,6 @@
-package edu.SecondTask.SecondVersion;
+package edu.secondTask.consumerRealization;
 
-import edu.SecondTask.Person;
+import edu.secondTask.Person;
 
 import java.util.function.Consumer;
 
