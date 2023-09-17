@@ -1,6 +1,8 @@
 package edu.example.task2;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -13,13 +15,12 @@ public class App {
         System.out.println("Before modification:");
         printPeople(people);
 
-        people = getModifiedPeople(people);
+        people = getModifiedPeople(people, getConsumers());
         System.out.println("After modification:");
         printPeople(people);
     }
 
-
-    public static Collection<Person> getModifiedPeople(Collection<Person> people) {
+    public static Collection<Consumer<Person>> getConsumers() {
         Consumer<Person> logger = person -> System.out.println("Swap parents for person " + person.getName());
         Consumer<Person> removeFriend = person -> person.setFriend(null);
         Consumer<Person> swapParents = person -> {
@@ -27,14 +28,15 @@ public class App {
             person.setFather(person.getMother());
             person.setMother(father);
         };
-        return people.stream()
-                // Step 1: Swap parents
-                .peek(swapParents)
-                // Step 2: Logging changes
-                .peek(logger)
-                // Step 3: Remove friend
-                .peek(removeFriend)
-                .collect(Collectors.toList());
+        return new ArrayList<>(List.of(swapParents, logger, removeFriend));
+    }
+
+
+    public static Collection<Person> getModifiedPeople(Collection<Person> people, Collection<Consumer<Person>> consumers) {
+        return people.stream().map(person -> {
+            consumers.forEach(consumer -> consumer.accept(person));
+            return person;
+        }).collect(Collectors.toList());
     }
 
     private static Collection<Person> createPeople() {

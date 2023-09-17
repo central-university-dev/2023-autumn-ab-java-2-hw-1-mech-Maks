@@ -25,7 +25,7 @@ class AppTest {
                 new Person(new Person("Mother1"), new Person("Father1"), null, "1"),
                 new Person(new Person("Mother2"), new Person("Father2"), null, "2")
         ).collect(Collectors.toList());
-        Collection<Person> actual = App.getModifiedPeople(people);
+        Collection<Person> actual = App.getModifiedPeople(people, App.getConsumers());
         assertEquals(expected, actual);
     }
 }
