@@ -5,6 +5,22 @@ import java.util.*;
 public class Task4 {
     public static void main(String[] args) {
         // example 1
+        concurrentModificationExample();
+
+        // example 2
+
+        staticArrays();
+
+        // example 3
+
+        nestedLoops();
+
+        // example 4
+        breakingWhileIteration();
+
+    }
+
+    private static void concurrentModificationExample() {
         List<Integer> numbers = new ArrayList<>();
         for (int i = 1; i < 6; i++) {
             numbers.add(i);
@@ -30,22 +46,20 @@ public class Task4 {
         } catch (ConcurrentModificationException e) {
             System.out.println("for each loop failed");
         }
+    }
 
-
-        // example 2
-
+    // but we can't use iterators for arrays. the only way to do this is to use stream of this array
+    private static void staticArrays() {
         int[] arr = new int[]{1, 2, 3, 4, 5};
         for (int x : arr) {
             System.out.print(x + " ");
         }
-
         System.out.println();
+    }
 
-        // but we can't use iterators for arrays. the only way to do this is to use stream of this array
 
-
-        // example 3
-
+    // forEach nested loop and nested Iterator will work
+    private static void nestedLoops() {
         List<Integer> nums = new LinkedList<>();
         nums.add(2);
         nums.add(3);
@@ -57,7 +71,6 @@ public class Task4 {
         nums2.add(5);
         nums2.add(6);
 
-        // it will work
         for (int num1 : nums) {
             for (int num2 : nums2) {
                 if (num1 < num2) {
@@ -65,20 +78,50 @@ public class Task4 {
                 }
             }
         }
+        System.out.println();
 
-        System.out.println("\nnested for each did it");
+        List<String> outerList = new ArrayList<>();
+        outerList.add("A");
+        outerList.add("B");
+        outerList.add("C");
 
-        try {
-            // it will fail because iterator points to next element every time
-            for (var iter = nums.iterator(); iter.hasNext(); ) {
-                for (var iter2 = nums2.iterator(); iter2.hasNext(); ) {
-                    if (iter.next() < iter2.next()) {
-                        System.out.println(iter.next() + " ");
-                    }
-                }
+        List<Integer> innerList = new ArrayList<>();
+        innerList.add(1);
+        innerList.add(2);
+        innerList.add(3);
+
+        // Вложенный цикл с использованием итераторов
+        Iterator<String> outerIterator = outerList.iterator();
+        while (outerIterator.hasNext()) {
+            String outerElement = outerIterator.next();
+            Iterator<Integer> innerIterator = innerList.iterator();
+            while (innerIterator.hasNext()) {
+                Integer innerElement = innerIterator.next();
+                System.out.println(outerElement + " " + innerElement);
             }
-        } catch (NoSuchElementException e) {
-            System.out.println("iterator failed");
         }
+    }
+
+    // using Iterator we can check some conditions and break our loop.
+    // but when we use forEach we can't break white iterating.
+    private static void breakingWhileIteration() {
+        List<String> seasons = new ArrayList<>();
+        seasons.add("Winter");
+        seasons.add("Spring");
+        seasons.add("Summer");
+        seasons.add("Fall");
+
+        for (var seasonsIterator = seasons.iterator(); seasonsIterator.hasNext(); ) {
+            String current = seasonsIterator.next();
+            if (current.equals("Summer")) {
+                System.out.println("Vacation yeeey");
+                break;
+            }
+            else {
+                System.out.println(current);
+            }
+        }
+        System.out.println();
+        seasons.forEach(System.out::println);
     }
 }
