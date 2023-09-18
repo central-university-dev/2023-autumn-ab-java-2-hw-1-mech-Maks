@@ -20,19 +20,27 @@ public class Main {
         functions.add(new RemoveFriendProcessor());
 
         Person mother = new Person();
+        mother.setName("mama");
         Person father = new Person();
-
+        father.setName("father");
         Person child = new Person();
+        child.setName("child");
         Person friend = new Person();
+        friend.setName("friend");
         child.setMother(mother);
         child.setFather(father);
         child.setFriend(friend);
+        friend.setMother(mother);
 
-        List<Person> inputList = List.of(child);
+        List<Person> inputList = List.of(child, mother, father, friend);
 
         var result = process(inputList, functions);
-        System.out.print(result);
-    }
+
+        result.forEach(System.out::println);
+
+
+
+  }
 
     public static List<Person> process(List<Person> persons, List<Function<Person, Person>> functions) {
         List<Person> result = new ArrayList<>();

@@ -26,20 +26,22 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args)  {
 
         List<Thread> list = new ArrayList<>();
         for (int i  = 0 ; i < 3;i++) {
             list.add( new Incrementer());
         }
-
-        HashMap
         for (var thread : list) {
             thread.start();
         }
-
-        for (var thread : list) {
-            thread.join();
+        try {
+            for (var thread : list) {
+                thread.join();
+            }
+        }
+        catch (InterruptedException exp) {
+            System.out.print("Exception!!!");
         }
 
         System.out.print(counter.get());

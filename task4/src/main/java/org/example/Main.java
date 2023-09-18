@@ -50,15 +50,31 @@ public class Main {
             iterator.next();
             iterator.remove();
         }
-
         System.out.print(list);
     }
 
-
-    // при всем этом forEach лаконичней
+    // iterator может прикрать итерироваться досрочно
     static private void caseThree() {
         List<Integer> list = List.of(1, 2, 3, 5);
         Iterator<Integer> iterator = list.listIterator();
+
+        while (iterator.hasNext())
+            if (iterator.next() == 3) {
+                // doSomething
+                break;
+            }
+
+
+        list.forEach((elem) -> {
+            System.out.println(elem);
+            //break; - не работает
+        });
+    }
+    // при всем этом forEach лаконичней
+    static private void caseFour() {
+        List<Integer> list = List.of(1, 2, 3, 5);
+        Iterator<Integer> iterator = list.listIterator();
+
         while (iterator.hasNext()) {
             Integer i = iterator.next();
             System.out.println(i);

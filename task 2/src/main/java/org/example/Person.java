@@ -10,5 +10,6 @@ import java.util.stream.Stream;
 public class Person {
     private Person mother;
     private Person father;
+    private String name;
     private Person friend;
 }

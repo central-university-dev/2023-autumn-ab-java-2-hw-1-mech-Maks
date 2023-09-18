@@ -9,7 +9,7 @@ public class LogProcessor implements Function<Person, Person> {
 
     @Override
     public Person apply(Person person) {
-        System.out.print("Changed");
+        System.out.println("Changed");
         return person;
     }
 }
