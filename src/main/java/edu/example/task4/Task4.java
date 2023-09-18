@@ -1,19 +1,15 @@
 package edu.example.task4;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Task4 {
     public static void main(String[] args) {
         // example 1
-        List<Integer> numbers = new ArrayList<>() {{
-            add(1);
-            add(2);
-            add(3);
-            add(4);
-            add(5);
-        }};
+        List<Integer> numbers = new ArrayList<>();
+        for (int i = 1; i < 6; i++) {
+            numbers.add(i);
+        }
+
         var iterator = numbers.iterator();
         while (iterator.hasNext()) {
             if (iterator.next() == 3) {
@@ -25,39 +21,41 @@ public class Task4 {
 
 
         // it will fail with Concurrent Modification Exception
-        for (Integer num : numbers) {
-            if (num == 2) {
-                numbers.remove(num);
+        try {
+            for (Integer num : numbers) {
+                if (num == 2) {
+                    numbers.remove(num);
+                }
             }
+        } catch (ConcurrentModificationException e) {
+            System.out.println("for each loop failed");
         }
-
-        System.out.println("for each loop did it");
 
 
         // example 2
 
-        int[] arr = new int[] {1,2,3,4,5};
+        int[] arr = new int[]{1, 2, 3, 4, 5};
         for (int x : arr) {
             System.out.print(x + " ");
         }
+
+        System.out.println();
 
         // but we can't use iterators for arrays. the only way to do this is to use stream of this array
 
 
         // example 3
 
-        List<Integer> nums = new LinkedList<>() {{
-            add(2);
-            add(3);
-            add(4);
-        }};
+        List<Integer> nums = new LinkedList<>();
+        nums.add(2);
+        nums.add(3);
+        nums.add(4);
 
-        List<Integer> nums2 = new LinkedList<>() {{
-            add(2);
-            add(4);
-            add(5);
-            add(6);
-        }};
+        List<Integer> nums2 = new LinkedList<>();
+        nums2.add(2);
+        nums2.add(4);
+        nums2.add(5);
+        nums2.add(6);
 
         // it will work
         for (int num1 : nums) {
@@ -68,13 +66,19 @@ public class Task4 {
             }
         }
 
-        // it will fail because iterator points to next element every time
-        for (var iter = nums.iterator(); iter.hasNext();) {
-            for (var iter2 = nums2.iterator(); iter2.hasNext();) {
-                if (iter.next() < iter2.next()) {
-                    System.out.println(iter + " ");
+        System.out.println("\nnested for each did it");
+
+        try {
+            // it will fail because iterator points to next element every time
+            for (var iter = nums.iterator(); iter.hasNext(); ) {
+                for (var iter2 = nums2.iterator(); iter2.hasNext(); ) {
+                    if (iter.next() < iter2.next()) {
+                        System.out.println(iter.next() + " ");
+                    }
                 }
             }
+        } catch (NoSuchElementException e) {
+            System.out.println("iterator failed");
         }
     }
 }

@@ -24,7 +24,6 @@ public class Task2 {
         p3.setFather(dad3);
         p3.setMother(mom3);
         var people = List.of(p1, p2, p3);
-
         var processors = List.of(
                 new SwapParentsProcessor(),
                 new RemoveFriendProcessor(),

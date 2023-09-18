@@ -5,7 +5,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.util.Optional;
 
 @Getter
 @Setter
@@ -19,6 +18,6 @@ public class Person {
 
     @Override
     public String toString() {
-        return Optional.of(this.name).orElse("");
+        return this.name;
     }
 }
