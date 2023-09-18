@@ -16,6 +16,7 @@ public class Person {
     private Person mother;
     private Person father;
     private Person friend;
+
     @Override
     public String toString() {
         return Optional.of(this.name).orElse("");
