@@ -39,4 +39,25 @@ public class Task4 {
         list.removeIf(s -> s.equals("def"));
         System.out.println(list);
     }
+
+    // forEach пройдет все
+    public static void example4() {
+        var list = List.of("abc", "def", "hgj");
+        list.forEach(x -> {
+            System.out.println(x);
+            // break; no such thing
+        });
+    }
+
+    // с Iterator можно выйти в какой-то момент
+    public static void example5() {
+        var list = List.of("abc", "def", "hgj");
+        for (var it = list.iterator(); it.hasNext();) {
+            var element = it.next();
+            System.out.println(element);
+            if (element.equals("def")) {
+                break;
+            }
+        }
+    }
 }
