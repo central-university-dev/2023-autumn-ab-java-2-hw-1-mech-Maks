@@ -1,6 +1,7 @@
-package edu.secondTask.processorRealization;
+package edu.secondTask.impl.processors;
 
 import edu.secondTask.Person;
+import edu.secondTask.api.PersonProcessor;
 
 public class LogProcessor implements PersonProcessor {
     @Override

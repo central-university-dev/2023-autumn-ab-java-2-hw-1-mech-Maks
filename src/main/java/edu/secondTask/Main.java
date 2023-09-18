@@ -1,9 +1,9 @@
 package edu.secondTask;
 
-import edu.secondTask.processorRealization.LogProcessor;
-import edu.secondTask.processorRealization.PersonProcessor;
-import edu.secondTask.processorRealization.RemoveFriendProcessor;
-import edu.secondTask.processorRealization.SwapParentsProcessor;
+import edu.secondTask.impl.processors.LogProcessor;
+import edu.secondTask.api.PersonProcessor;
+import edu.secondTask.impl.processors.RemoveFriendProcessor;
+import edu.secondTask.impl.processors.SwapParentsProcessor;
 
 import java.util.List;
 

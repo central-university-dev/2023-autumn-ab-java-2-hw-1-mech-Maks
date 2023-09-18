@@ -1,10 +1,12 @@
-package edu.secondTask.processorRealization;
+package edu.secondTask.impl.consumers;
 
 import edu.secondTask.Person;
 
-public class SwapParentsProcessor implements PersonProcessor {
+import java.util.function.Consumer;
+
+public class SwapParentsConsumer implements Consumer<Person> {
     @Override
-    public void process(Person person) {
+    public void accept(Person person) {
         Person tmpSwap = person.getFather();
 
         person.setFather(person.getMother());

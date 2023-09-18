@@ -1,4 +1,4 @@
-package edu.secondTask.processorRealization;
+package edu.secondTask.api;
 
 import edu.secondTask.Person;
 
