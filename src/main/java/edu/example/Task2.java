@@ -1,8 +1,8 @@
 package edu.example;
 
-import edu.example.processors.LogProcessor;
-import edu.example.processors.RemoveFriendProcessor;
-import edu.example.processors.SwapParentsProcessor;
+import edu.example.processors.LogConsumer;
+import edu.example.processors.RemoveFriendConsumer;
+import edu.example.processors.SwapParentsConsumer;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -21,22 +21,14 @@ public class Task2 {
 
         Person andrew = new Person("Andrew", maria, david, jack);
 
-//        andrew = Stream.of(andrew)
-//                .peek(new LogProcessor())
-//                .peek(new RemoveFriendProcessor())
-//                .peek(new LogProcessor())
-//                .peek(new SwapParentsProcessor())
-//                .peek(new LogProcessor()).findFirst().get();
-
         Queue<Consumer<Person>> chain = new LinkedList<>();
 
-        chain.add(new LogProcessor());
-        chain.add(new RemoveFriendProcessor());
-        chain.add(new LogProcessor());
-        chain.add(new SwapParentsProcessor());
-        chain.add(new LogProcessor());
+        chain.add(new LogConsumer());
+        chain.add(new RemoveFriendConsumer());
+        chain.add(new LogConsumer());
+        chain.add(new SwapParentsConsumer());
+        chain.add(new LogConsumer());
 
-
-        while (!chain.isEmpty()) chain.poll().accept(andrew);
+        chain.forEach(consumer -> consumer.accept(andrew));
     }
 }

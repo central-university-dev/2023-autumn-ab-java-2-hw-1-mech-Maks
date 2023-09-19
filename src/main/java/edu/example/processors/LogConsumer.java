@@ -4,10 +4,10 @@ import edu.example.Person;
 
 import java.util.function.Consumer;
 
-public class RemoveFriendProcessor implements Consumer<Person> {
+public class LogConsumer implements Consumer<Person> {
 
     @Override
     public void accept(Person person) {
-        person.setFriend(null);
+        System.out.println("changed: " + person);
     }
 }

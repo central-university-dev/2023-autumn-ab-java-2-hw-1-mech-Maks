@@ -25,18 +25,23 @@ public class Task3 {
 
         // Проверяем, что все таски выполнены корректно, прежде чем выводить результат
         // (одно лишь ожидание isTerminated не позволит нам этого узнать)
-        for (var t : tasks) {
-            try {
+
+        try {
+            for (var t : tasks) {
                 t.get();
-            } catch (InterruptedException e) {
-                System.err.println("Работа потоков была прервана");
-                return;
-            } catch (ExecutionException e) {
-                System.err.println("Ошибка при выполнении задачи потока");
-                return;
             }
+        } catch (InterruptedException e) {
+            System.err.println("Работа потоков была прервана");
+            e.printStackTrace();
+            return;
+        } catch (ExecutionException e) {
+            System.err.println("Ошибка при выполнении задачи потока");
+            e.printStackTrace();
+            return;
+        } finally {
+            exec.shutdown();
         }
-        exec.shutdown();
+
         System.out.println(value.get());
     }
 }
