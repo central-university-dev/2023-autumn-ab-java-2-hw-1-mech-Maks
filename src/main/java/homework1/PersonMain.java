@@ -11,13 +11,11 @@ import java.util.function.Consumer;
 
 public class PersonMain {
 
-
-
     public static void main(String[] args) {
-        Person p1 = new Person();
-        p1.setFriend(new Person());
-        p1.setMother(new Person());
-        p1.setFather(new Person());
+        Person p1 = new Person("John");
+        p1.setFriend(new Person("Robert"));
+        p1.setMother(new Person("Clare"));
+        p1.setFather(new Person("Mike"));
 
         Consumer<Person> logProcessor = new LogProcessor();
         Consumer<Person> swapParentsProcessor = new SwapParentsProcessor();
@@ -32,8 +30,6 @@ public class PersonMain {
         processors.add(removeFriendProcessor);
         processors.add(logProcessor);
 
-        for(Consumer<Person> pr : processors){
-            Optional.ofNullable(p1).ifPresent(pr);
-        }
+        processors.forEach(pr -> pr.accept(p1));
     }
 }

@@ -4,7 +4,11 @@ public class Person {
     private Person friend;
     private Person mother;
     private Person father;
+    private final String name;
 
+    public Person(String name){
+        this.name = name;
+    }
 
     public Person getFriend() {
         return friend;
@@ -28,5 +32,10 @@ public class Person {
 
     public void setFather(Person father) {
         this.father = father;
+    }
+
+    @Override
+    public String toString(){
+        return this.name;
     }
 }
