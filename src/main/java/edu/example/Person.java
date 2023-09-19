@@ -1,17 +1,22 @@
 package edu.example;
+
 import lombok.Getter;
 import lombok.Setter;
-
+import lombok.ToString;
+import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 @Getter
 @Setter
+@ToString
 public class Person {
+    @Nullable
     private Person mother;
+    @Nullable
     private Person father;
+    @Nullable
     private Person friend;
     private String name;
 
@@ -24,47 +29,26 @@ public class Person {
         me.setFather(father);
         me.setFriend(friend);
 
-        List<Consumer <Person>> consumers = new ArrayList<>();
+        List<Consumer<Person>> consumers = new ArrayList<>();
 
-        Consumer<Person> change = a -> {
+        consumers.add(a -> {
             Person c = a.getMother();
             a.setMother(a.getFather());
             a.setFather(c);
-        };
-        consumers.add(change);
+        });
 
-        Consumer<Person> del = a -> {
+        consumers.add(a -> {
             a.setFriend(null);
-        };
-        consumers.add(del);
+        });
 
-        Consumer<Person> log = System.out::println;
-        consumers.add(log);
+        consumers.add(a -> System.out.println("Changed mother with father " + me));
 
-        log.accept(me);
-
-        me.changeMotherWithFather(consumers);
-    }
-
-    private Person friendGrandma() {
-        return Optional.ofNullable(friend)
-                .map(Person::getMother)
-                .map(Person::getMother)
-                .orElse(null);
-    }
-    private void changeMotherWithFather(List<Consumer<Person>> consumers) {
-        consumers.forEach(a -> a.accept(this));
+        consumers.forEach(a -> a.accept(me));
     }
 
     public Person(String name) {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "mother=" + Optional.of(this).map(Person::getMother).map(Person::getName).orElse(null) +
-                ", father=" + Optional.of(this).map(Person::getFather).map(Person::getName).orElse(null) +
-                ", friend=" + Optional.of(this).map(Person::getFriend).map(Person::getName).orElse(null) +
-                ", name=" + name;
-    }
+
 }
