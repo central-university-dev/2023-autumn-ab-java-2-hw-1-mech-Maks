@@ -3,14 +3,13 @@ package edu;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Task2 {
 
     public static void main(String[] args) {
         List<Person> people = new ArrayList<>();
-        people.add(new Person("Olga", null, null, null));
+        people.add(new Person("Olga"));
         people.add(new Person("Oleg",null, null, people.get(0)));
         people.add(new Person("Maxim", people.get(0), people.get(1), null));  // Son of Oleg and Olga
         people.add(new Person("Maria", people.get(0), people.get(1), people.get(2)));  // Daughter of Oleg and Olga
@@ -33,13 +32,14 @@ public class Task2 {
 
     private static void printPeople(Collection<Person> people) {
         for (Person person : people)
-            System.out.println("  " + person.name
-                    + ": father - " + Optional.ofNullable(person.father).map(pers -> pers.name).orElse("none")
-                    + ", mother - " + Optional.ofNullable(person.mother).map(pers -> pers.name).orElse("none")
-                    + ", friend - " + Optional.ofNullable(person.friend).map(pers -> pers.name).orElse("none"));
+            System.out.println(person);
     }
 
     private static class Person {
+
+        public Person(String name) {
+            this.name = name;
+        }
 
         public Person(String name, Person mother, Person father, Person friend) {
             this.name = name;
@@ -52,6 +52,14 @@ public class Task2 {
         private Person mother;
         private Person father;
         private Person friend;
+
+        @Override
+        public String toString() {
+            return name
+                    + ": father - " + (father != null ? father.name : "none")
+                    + ", mother - " + (mother != null ? mother.name : "none")
+                    + ", friend - " + (friend != null ? friend.name : "none");
+        }
     }
 
 }
