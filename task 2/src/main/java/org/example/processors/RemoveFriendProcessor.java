@@ -4,7 +4,7 @@ import org.example.Person;
 
 import java.util.function.Function;
 
-public class RemoveFriendProcessor implements Function<Person, Person> {
+public class RemoveFriendProcessor implements PersonProcessor {
 
     @Override
     public Person apply(Person person) {

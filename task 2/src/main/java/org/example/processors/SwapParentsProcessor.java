@@ -4,7 +4,7 @@ import org.example.Person;
 
 import java.util.function.Function;
 
-public class SwapParentsProcessor implements Function<Person, Person> {
+public class SwapParentsProcessor implements PersonProcessor {
     @Override
     public Person apply(Person person) {
         Person mother = person.getMother();

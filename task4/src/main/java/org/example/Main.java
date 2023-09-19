@@ -7,17 +7,14 @@ import java.util.List;
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
-
-
     public static void main(String[] args) {
         caseOne();
         caseTwo();
         caseThree();
         caseFour();
-
     }
 
-    // forEach не может получить доступ к внешним переменым
+    // forEach не может получить доступ к внешним не финальным или не статическим переменым
     static private void caseOne() {
         List<Integer> list = List.of(1, 2, 3, 5);
         Iterator<Integer> iterator = list.listIterator();
@@ -28,11 +25,12 @@ public class Main {
 
         System.out.println(subSum);
 
-        /* не работает
-        int subForeach = 0;
-        list.forEach((integer -> subForeach += integer));
-         */
-    }
+        // необходимо использовать внутреннее состояние обьекта
+        final int[] subForeach = {0};
+        list.forEach((integer -> subForeach[0] += integer));
+
+        System.out.println(subForeach[0]);
+         }
 
     // forEach не может удалить элемент
     static  private void caseTwo() {
@@ -60,7 +58,8 @@ public class Main {
 
         list.forEach((elem) -> {
             System.out.println(elem);
-            //break; - не работает
+            //if (elem == 3) - не работает
+            //break;
         });
     }
     // при всем этом forEach лаконичней

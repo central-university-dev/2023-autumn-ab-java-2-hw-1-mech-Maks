@@ -1,10 +1,12 @@
 package org.example;
 
 import org.example.processors.LogProcessor;
+import org.example.processors.PersonProcessor;
 import org.example.processors.RemoveFriendProcessor;
 import org.example.processors.SwapParentsProcessor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
@@ -13,11 +15,11 @@ import java.util.function.Function;
 public class Main {
 
     public static void main(String[] args) {
-        List<Function<Person, Person>> functions = new ArrayList<>();
+        List<PersonProcessor> functions = new ArrayList<>();
 
-        functions.add(new LogProcessor());
         functions.add(new SwapParentsProcessor());
         functions.add(new RemoveFriendProcessor());
+        functions.add(new LogProcessor());
 
         Person mother = new Person();
         mother.setName("mama");
@@ -32,17 +34,22 @@ public class Main {
         child.setFriend(friend);
         friend.setMother(mother);
 
-        List<Person> inputList = List.of(child, mother, father, friend);
+        List<Person> inputList = List.of(child);
+        System.out.println("Before");
+        inputList.forEach(System.out::println);
 
         var result = process(inputList, functions);
 
+        System.out.println("After");
         result.forEach(System.out::println);
-
-
+        System.out.println();
+        System.out.println("child.father == mother: " + (child.getFather() == mother));
+        System.out.println("child.mother == father: " + (child.getMother() == father));
+        System.out.println("child.friend == null: " + (child.getFriend() == null));
 
   }
 
-    public static List<Person> process(List<Person> persons, List<Function<Person, Person>> functions) {
+    public static List<Person> process(List<Person> persons, List<PersonProcessor> functions) {
         List<Person> result = new ArrayList<>();
         for (var person : persons) {
             for (var func : functions) {
