@@ -1,13 +1,12 @@
 package edu;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Task3 {
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException {
+    public static void main(String[] args) throws InterruptedException {
 
         AtomicInteger one = new AtomicInteger(1);
         System.out.println("Initial value: " + one.get());
