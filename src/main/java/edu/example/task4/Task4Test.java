@@ -8,8 +8,10 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-//Из плюсов - итератор разрешает удалять элементы во время итерации, в отличии от forEach
-//Из минусов - итератор не работает с обычными массивами
+// Из плюсов - итератор разрешает удалять элементы во время итерации, в отличии от forEach
+// Из минусов - итератор не работает с обычными массивами
+// forEach - терминальная операция, из него нельзя выйти во время выполнения
+// обычный for можно остановить с помощью break
 public class Task4Test {
 
     private final List<Integer> integers = new ArrayList<>();
@@ -56,6 +58,36 @@ public class Task4Test {
         }
 
         assertEquals(ConcurrentModificationException.class, Optional.ofNullable(exception).map(Exception::getClass).orElse(null));
+
+    }
+
+    @Test
+    void stopForEach(){
+
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+        numbers.forEach(
+                number -> {
+                    // не скомпилится
+                    // if (number % 2 == 0 ) break;
+                }
+        );
+
+    }
+
+    @Test
+    void stopFor(){
+
+        int[] numbers = new int[]{1,2,3,4};
+
+        //Тут все будет ок
+        for (int number : numbers) {
+            if (number % 2 == 0) break;
+        }
+        //Тут все будет ок
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] % 2 == 0) break;
+        }
 
     }
 

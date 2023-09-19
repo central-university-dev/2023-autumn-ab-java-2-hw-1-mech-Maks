@@ -12,20 +12,22 @@ public class Task3Test
 
     @Test
     void testIncrementor(){
-        final int POOL_SIZE = 3;
-        final int RESULT = 30_001;
+        final int poolSize = 3;
+        final int result = 30_001;
 
         Incrementor incrementor = new Incrementor();
 
-        ExecutorService executorService = Executors.newFixedThreadPool(POOL_SIZE);
+        ExecutorService executorService = Executors.newFixedThreadPool(poolSize);
 
-        for (int i = 0; i < POOL_SIZE; ++i) executorService.execute(incrementor);
+        for (int i = 0; i < poolSize; ++i) {
+            executorService.execute(incrementor);
+        }
 
         executorService.shutdown();
-        while (!executorService.isTerminated());
+        while (!executorService.isTerminated()) {};
 
-        assertEquals(RESULT, incrementor.getI());
-        System.out.println("Expected: " + RESULT + "\nGot: " + incrementor.getI() + "\n");
+        assertEquals(result, incrementor.getI().get());
+        System.out.println("Expected: " + result + "\nGot: " + incrementor.getI() + "\n");
 
     }
 
