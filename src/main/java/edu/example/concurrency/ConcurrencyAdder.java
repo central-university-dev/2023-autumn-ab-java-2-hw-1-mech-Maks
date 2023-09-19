@@ -1,0 +1,50 @@
+package edu.example.concurrency;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class ConcurrencyAdder {
+    private static final int THREADS = 3;
+    private static final int ITERATIONS = 10000;
+    private static final AtomicInteger count = new AtomicInteger(1);
+
+    public static void execute() {
+        ExecutorService executorService = Executors.newFixedThreadPool(THREADS);
+        for (int i = 0; i < THREADS; ++i) {
+            executorService.submit(task());
+        }
+        awaitAndShutdown(executorService);
+
+        System.out.println("Total `count`: " + count);
+    }
+
+    public static int getCount() {
+        return count.get();
+    }
+
+    private static Runnable task() {
+        return () -> {
+            for (int i = 0; i < ITERATIONS; ++i) {
+                int value = count.incrementAndGet();
+                System.out.println("Thread ID: " + Thread.currentThread().getId() + "; value: " + value);
+            }
+        };
+    }
+
+    private static void awaitAndShutdown(ExecutorService executorService) {
+        executorService.shutdown();
+        try {
+            if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+                executorService.shutdownNow();
+                if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+                    System.err.println("Executor service didn't terminate");
+                }
+            }
+        } catch (InterruptedException e) {
+            executorService.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+    }
+}
