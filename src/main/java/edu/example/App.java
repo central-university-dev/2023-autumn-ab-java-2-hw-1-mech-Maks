@@ -7,21 +7,17 @@ import edu.example.personstuff.chanprocessor.PersonChainProcessor;
 import edu.example.personstuff.handlers.ChangeParents;
 import edu.example.personstuff.handlers.Logging;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class app {
     public static void main(String[] args) {
 
         PersonChainProcessor chainProcessor = new PersonChainProcessor();
-        List<Handler<Person>> tasks = Stream.of(
-                new ChangeParents(),
-                new Logging(),
-                new DeleteFriend(),
-                new Logging())
-                .toList();
+        List<Handler<Person>> tasks = Arrays.asList(new ChangeParents(), new Logging(), new DeleteFriend(), new Logging());
 
-        chainProcessor.addHandler(tasks);
+        chainProcessor.addHandlers(tasks);
 
         Person mom = new Person("m", null, null, null);
         Person dad = new Person("d", null, null, null);

@@ -1,14 +1,12 @@
 package edu.example.personstuff;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class Person {
-    String name;
+    private final String name;
     private Person mother;
     private Person father;
     private Person friend;
@@ -17,5 +15,10 @@ public class Person {
         this.mother = mother;
         this.father = father;
         this.friend = friend;
+    }
+
+    @Override
+    public String toString(){
+        return "Changed";
     }
 }

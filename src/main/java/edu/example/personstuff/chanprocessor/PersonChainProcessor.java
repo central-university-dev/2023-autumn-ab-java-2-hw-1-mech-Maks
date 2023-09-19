@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class PersonChainProcessor {
-    List<Handler<Person>> handlers;
+    private final List<Handler<Person>> handlers;
 
     public PersonChainProcessor(){
         handlers = new LinkedList<>();
@@ -17,7 +17,7 @@ public class PersonChainProcessor {
     public void addHandler(Handler<Person> handler){
         handlers.add(handler);
     }
-    public void addHandler(List<Handler<Person>> handlers){
+    public void addHandlers(List<Handler<Person>> handlers){
         this.handlers.addAll(handlers);
     }
 
