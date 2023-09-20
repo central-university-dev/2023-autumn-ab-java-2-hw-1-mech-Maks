@@ -19,9 +19,9 @@
 
 Особенности `HashMap<>`:
 
-- Часть Java Collection Framework
+- Часть Java Collection Framework, но коллекцией не является (реализует интерфейс `Map`, [ссылка](https://www.google.com/search?sca_esv=566920415&sxsrf=AM9HkKmeUIUqMIaP9nkgZq3DhZp1Hc2x5g:1695211850573&q=java+collections+framework&tbm=isch&source=lnms&sa=X&sqi=2&ved=2ahUKEwjbkLChlLmBAxWwRvEDHYrqC1wQ0pQJegQIDRAB#vhid=-92xo2TlIO0PdM&vssid=3981:puuyQGGqlkDiQM))
 - Хранит пары ключ-значение, ключи уникальные.
-- Работает за время подсчета хэша от ключа
+- Работает за время подсчета хэша от ключа, если нет коллизий. Если коллизия случается, то такие пары хранятся в одном бакете в виде сбалансированного (красно-черного, since Java 8) дерева по значениям (если значения не могут сравниваться друг с другом, то идет сравнение по адресам сохранненых объектов). Получается, что в худшем случаем доступ к элементу за `O(log(n))`, если все `n` элементов угодили в один бакет.
 - Несортированная коллекция
 - Допускает единственный `null` ключ и множество `null` значений
 - Не thread-safe
@@ -35,22 +35,7 @@
 > 
 > b. логгируют “changed” (System.out.println())
 
-```java
-...
-Collection<Person> people = List.of(...);
-people.stream()
-    .peek(p -> {
-        // swap mum and dad
-        Person father = p.father;
-        p.father = p.mother;
-        p.mother = father;
-    })
-    .forEach(p -> {
-        // print "changed"
-        System.out.println("changed");
-    });
-...
-```
+Перенес все это дело в код проекта.
 
 ## Задача 3:
 
@@ -110,3 +95,5 @@ public static void main(String[] args) throws InterruptedException {
     System.out.println(lst); // []
 }
 ```
+
+Для остановки итераций в обычном `for` используется `break`. А вот выйти из `.forEach(...)` вообще никак нельзя.
