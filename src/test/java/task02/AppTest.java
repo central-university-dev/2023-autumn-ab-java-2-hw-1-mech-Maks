@@ -46,7 +46,7 @@ public class AppTest
                 new SwapParentsProcessor()
         ));
 
-        person.executePersonProcessorsChain(personProcessors);
+        personProcessors.forEach(personProcessor -> personProcessor.accept(person));
 
         assertEquals("FatherName", Optional.ofNullable(person).map(Person::getMother).map(Person::getName).orElse(null));
     }
@@ -58,9 +58,9 @@ public class AppTest
                 new RemoveFriendProcessor()
         ));
 
-        person.executePersonProcessorsChain(personProcessors);
+        personProcessors.forEach(personProcessor -> personProcessor.accept(person));
 
-        assertFalse(Optional.ofNullable(person).map(Person::getFriend).isPresent());
+        assertTrue(person != null ? person.getFriend() == null : false);
     }
 
     public void testSwapMaternalGrandparents()
@@ -70,12 +70,13 @@ public class AppTest
                 new SwapParentsProcessor()
         ));
 
-        Optional.ofNullable(person).map(Person::getMother).orElse(null).executePersonProcessorsChain(personProcessors);
+        personProcessors.forEach(personProcessor -> personProcessor.accept(person != null ? person.getMother() : null));
 
         assertEquals("MaternalGrandmotherName", Optional.ofNullable(person)
                 .map(Person::getMother)
                 .map(Person::getFather)
-                .map(Person::getName).orElse(null));
+                .map(Person::getName)
+                .orElse(null));
     }
 
     public void testRemoveFathersFriend()
@@ -85,9 +86,12 @@ public class AppTest
                 new RemoveFriendProcessor()
         ));
 
-        Optional.ofNullable(person).map(Person::getFather).orElse(null).executePersonProcessorsChain(personProcessors);
+        personProcessors.forEach(personProcessor -> personProcessor.accept(person != null ? person.getFather() : null));
 
-        assertFalse(Optional.ofNullable(person).map(Person::getFather).map(Person::getFriend).isPresent());
+        assertFalse(Optional.ofNullable(person)
+                .map(Person::getFather)
+                .map(Person::getFriend)
+                .isPresent());
     }
 
     public void testComplexChain()
@@ -99,11 +103,20 @@ public class AppTest
                 new SwapParentsProcessor()
         ));
 
-        person.executePersonProcessorsChain(personProcessors);
+        personProcessors.forEach(personProcessor -> personProcessor.accept(person));
 
-        assertEquals("FatherName", Optional.ofNullable(person).map(Person::getMother).map(Person::getName).orElse(null));
-        assertEquals("MaternalGrandmotherName", Optional.ofNullable(person).map(Person::getFather).map(Person::getMother).map(Person::getName).orElse(null));
-        assertFalse(Optional.ofNullable(person).map(Person::getFriend).isPresent());
+        assertEquals("FatherName", Optional.ofNullable(person)
+                .map(Person::getMother)
+                .map(Person::getName)
+                .orElse(null));
+
+        assertEquals("MaternalGrandmotherName", Optional.ofNullable(person)
+                .map(Person::getFather)
+                .map(Person::getMother)
+                .map(Person::getName)
+                .orElse(null));
+
+        assertTrue(person != null ? person.getFriend() == null : false);
     }
 
     private Person getSimplePerson() {

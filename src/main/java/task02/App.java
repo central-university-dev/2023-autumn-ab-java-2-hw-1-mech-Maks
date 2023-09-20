@@ -25,6 +25,6 @@ public class App {
                 new LogProcessor()
         ));
 
-        person.executePersonProcessorsChain(personProcessors);
+        personProcessors.forEach(personProcessor -> personProcessor.accept(person));
     }
 }

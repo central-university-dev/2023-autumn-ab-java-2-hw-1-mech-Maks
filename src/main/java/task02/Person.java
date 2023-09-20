@@ -53,8 +53,4 @@ public class Person {
     public void setFriend(Person newFriend) {
         friend = newFriend;
     }
-
-    public void executePersonProcessorsChain(List<Consumer<Person>> personProcessorsChain) {
-        personProcessorsChain.forEach(personProcessor -> personProcessor.accept(this));
-    }
 }
