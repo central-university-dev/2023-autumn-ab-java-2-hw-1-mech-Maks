@@ -21,7 +21,7 @@ public class App {
         System.out.println(people);
 
         //  some other Person cusumers might be added
-        //  during runtime as well (but create Collection use new instead of List.of(...), because it create immutable list)
+        //  during runtime as well (but create Collection using `new` instead of `List.of(...)`, because it `List.of(...)` creates immutable list)
         Collection<Consumer<Person>> handlers = List.of(new ParentSwapper<>());
 
         people.stream()
