@@ -3,7 +3,6 @@ package edu.example.task2;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -33,10 +32,8 @@ public class App {
 
 
     public static Collection<Person> getModifiedPeople(Collection<Person> people, Collection<Consumer<Person>> consumers) {
-        return people.stream().map(person -> {
-            consumers.forEach(consumer -> consumer.accept(person));
-            return person;
-        }).collect(Collectors.toList());
+        return people.stream().peek(person -> consumers.forEach(consumer -> consumer.accept(person))
+        ).collect(Collectors.toList());
     }
 
     private static Collection<Person> createPeople() {
@@ -56,11 +53,6 @@ public class App {
 
     private static void printPeople(Collection<Person> people) {
         for (Person person : people)
-            System.out.println(String.format("%s has father - %s, mother - %s and friend - %s",
-                    person.getName(),
-                    Optional.ofNullable(person.getFather()).map(father -> father.getName()).orElse(null),
-                    Optional.ofNullable(person.getMother()).map(mother -> mother.getName()).orElse(null),
-                    Optional.ofNullable(person.getFriend()).map(friend -> friend.getName()).orElse(null))
-            );
+            System.out.println(person);
     }
 }
