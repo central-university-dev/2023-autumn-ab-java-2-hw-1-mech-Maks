@@ -18,6 +18,16 @@ public class Person {
         this.friend = friend;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s has mother - %s, father - %s, friend - %s",
+                name,
+                this.mother != null ? this.mother.name : null,
+                this.father != null ? this.father.name : null,
+                this.friend != null ? this.friend.name : null
+        );
+    }
+
     public String getName() {
         return name;
     }

@@ -15,26 +15,20 @@ public class App {
 
         ExecutorService executor = Executors.newFixedThreadPool(POOL_SIZE);
 
-        var incrementor = new Incrementor(count, INCREMENTS_COUNT);
-
         for (int i = 0; i < POOL_SIZE; i++) {
-            executor.execute(incrementor);
+            executor.execute(() -> {
+                for (int j = 0; j < INCREMENTS_COUNT; j++) {
+                    count.incrementAndGet();
+                }
+            });
         }
 
         executor.shutdown();
 
         try {
-            if (!executor.awaitTermination(3, TimeUnit.SECONDS)) {
-                executor.shutdownNow();
-                if (!executor.awaitTermination(3, TimeUnit.SECONDS)) {
-                    System.out.println("Pool did not terminate");
-                }
-            }
+            executor.awaitTermination(60, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            executor.shutdownNow();
-            Thread.currentThread().interrupt();
-        } finally {
-            executor.shutdown();
+            e.printStackTrace();
         }
 
         System.out.println(count);

@@ -23,6 +23,8 @@ public class App {
                 new LogProcessor()
         );
 
+        System.out.println(person);
         processors.forEach(process -> process.accept(person));
+        System.out.println(person);
     }
 }
