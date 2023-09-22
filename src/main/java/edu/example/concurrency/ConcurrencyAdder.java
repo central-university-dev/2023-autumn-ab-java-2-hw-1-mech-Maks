@@ -35,14 +35,8 @@ public class ConcurrencyAdder {
     private static void awaitAndShutdown(ExecutorService executorService) {
         executorService.shutdown();
         try {
-            if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
-                executorService.shutdownNow();
-                if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
-                    System.err.println("Executor service didn't terminate");
-                }
-            }
+            executorService.awaitTermination(60, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            executorService.shutdownNow();
             Thread.currentThread().interrupt();
         }
     }
