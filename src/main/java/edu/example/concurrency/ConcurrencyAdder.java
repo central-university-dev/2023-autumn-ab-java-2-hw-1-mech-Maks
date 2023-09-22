@@ -12,8 +12,16 @@ public class ConcurrencyAdder {
 
     public static void execute() {
         ExecutorService executorService = Executors.newFixedThreadPool(THREADS);
+
+        Runnable task = () -> {
+            for (int i = 0; i < ITERATIONS; ++i) {
+                int value = count.incrementAndGet();
+                System.out.println("Thread ID: " + Thread.currentThread().getId() + "; value: " + value);
+            }
+        };
+        
         for (int i = 0; i < THREADS; ++i) {
-            executorService.submit(task());
+            executorService.submit(task));
         }
         awaitAndShutdown(executorService);
 
@@ -22,15 +30,6 @@ public class ConcurrencyAdder {
 
     public static int getCount() {
         return count.get();
-    }
-
-    private static Runnable task() {
-        return () -> {
-            for (int i = 0; i < ITERATIONS; ++i) {
-                int value = count.incrementAndGet();
-                System.out.println("Thread ID: " + Thread.currentThread().getId() + "; value: " + value);
-            }
-        };
     }
 
     private static void awaitAndShutdown(ExecutorService executorService) {
