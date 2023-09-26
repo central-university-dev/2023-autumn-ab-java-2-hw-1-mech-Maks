@@ -1,46 +1,32 @@
 package edu.week01.task3;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Threading {
+    public static void main(String[] args) throws InterruptedException {
+        AtomicInteger counter = new AtomicInteger(1);
 
-    public static void main(String[] args) {
-        final int start = 1;
-        final int end = 30001;
-        final int incrementPerThread = 10000;
-        final int numThreads = 3;
+        Runnable runner = () -> increment(counter);
 
-        ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
+        Thread t1 = new Thread(runner);
+        Thread t2 = new Thread(runner);
+        Thread t3 = new Thread(runner);
 
-        for (int i = 0; i <= numThreads; i++) {
-            int threadStart = start + i * incrementPerThread;
-            int threadEnd = threadStart + incrementPerThread - 1;
-            if (threadEnd > end) {
-                threadEnd = end;
-            }
+        t1.start();
+        t1.join();
 
-            Runnable task = new IncrementTask(threadStart, threadEnd);
-            executorService.execute(task);
-        }
+        t2.start();
+        t2.join();
 
-        executorService.shutdown();
-    }
-}
+        t3.start();
+        t3.join();
 
-class IncrementTask implements Runnable {
-    private final int start;
-    private final int end;
-
-    public IncrementTask(int start, int end) {
-        this.start = start;
-        this.end = end;
+        System.out.println(counter.get());
     }
 
-    @Override
-    public void run() {
-        for (int i = start; i <= end; i++) {
-            System.out.println("Thread " + Thread.currentThread().getId() + ": " + i);
+    public static void increment(AtomicInteger counter) {
+        for (int i = 0; i < 10000; ++i) {
+            counter.addAndGet(1);
         }
     }
 }
